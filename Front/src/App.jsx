@@ -7,6 +7,7 @@ import Contact from '../pages/Contact'
 import SignatureDishes from '../pages/SignatureDishes'
 import Menu from '../pages/Menu'
 import { useState } from 'react'
+import AssistantButton from '../components/AssistantButton'
 
 
 
@@ -21,6 +22,7 @@ function App() {
         <Menu closeMenu={() => setIsMenuOpen(false)} />
       )}
       <Home/>
+      <AssistantButton/>
       <SignatureDishes/>
       <About/>
       <Contact/>
