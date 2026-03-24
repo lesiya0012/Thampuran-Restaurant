@@ -5,10 +5,11 @@ function Menu({ closeMenu }) {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
   const [items, setItems] = useState([]);
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   // Fetch categories
   useEffect(() => {
-    axios.get("http://localhost:5000/api/categories")
+    axios.get(`${BASE_URL}/api/categories`)
       .then(res => {
         setCategories(res.data);
         setActiveCategory(res.data[0]);
@@ -19,7 +20,7 @@ function Menu({ closeMenu }) {
   // Fetch items by category
   useEffect(() => {
     if (activeCategory) {
-      axios.get(`http://localhost:5000/api/items/${activeCategory}`)
+      axios.get(`${BASE_URL}/api/items/${activeCategory}`)
         .then(res => setItems(res.data))
         .catch(err => console.log(err));
     }

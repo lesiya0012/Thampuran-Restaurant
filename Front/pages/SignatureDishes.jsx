@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+
 export default function SignatureDishes() {
   const [dishes, setDishes] = useState([]);
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/dishes")
+    fetch(`${BASE_URL}/api/dishes`)
       .then((res) => res.json())
       .then((data) => setDishes(data))
       .catch((err) => console.error("Error fetching dishes:", err));
