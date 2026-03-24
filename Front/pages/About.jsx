@@ -1,6 +1,42 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+/* ✅ Word-by-word animation component */
+const WordReveal = ({ text, className }) => {
+  const words = text.split(" ");
+
+  return (
+    <motion.div
+      className={`flex flex-wrap ${className}`}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.08
+          }
+        }
+      }}
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          variants={{
+            hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
+            visible: { opacity: 1, y: 0, filter: "blur(0px)" }
+          }}
+          transition={{ duration: 0.5 }}
+          className="mr-2 inline-block"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
+};
+
 export default function About() {
   const ref = useRef(null);
 
@@ -9,7 +45,6 @@ export default function About() {
     offset: ["start end", "end start"],
   });
 
-  // Subtle parallax effect
   const y = useTransform(scrollYProgress, [0, 1], [-40, 40]);
   const scale = useTransform(scrollYProgress, [0, 1], [1.05, 1]);
 
@@ -21,7 +56,7 @@ export default function About() {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-        {/* LEFT - Image */}
+        {/* LEFT IMAGE */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -29,7 +64,6 @@ export default function About() {
           viewport={{ once: true }}
           className="relative"
         >
-          {/* Soft Glow Background */}
           <div className="absolute -inset-10 bg-amber-500/10 blur-3xl rounded-full"></div>
 
           <div className="rounded-2xl overflow-hidden shadow-2xl relative">
@@ -43,27 +77,44 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* RIGHT - Text */}
+        {/* RIGHT TEXT */}
         <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.2
+              }
+            }
+          }}
         >
-          <p className="text-amber-400 tracking-[0.35em] text-sm mb-4 uppercase">
-            Our Story
-          </p>
 
-          <h2 className="text-3xl lg:text-4xl font-serif font-bold leading-tight mb-8">
-            Where Tradition{" "}
-            <span className="text-amber-400 italic">Meets Flavour</span>
-          </h2>
-
+          {/* Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            className="text-amber-400 tracking-[0.35em] text-sm mb-4 uppercase"
+          >
+            Our Story
+          </motion.p>
+
+          {/* 🔥 Word-by-word Heading */}
+          <WordReveal
+            text="Where Tradition Meets Flavour"
+            className="text-3xl lg:text-4xl font-serif font-bold leading-tight mb-8"
+          />
+
+          {/* Paragraph 1 */}
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 }
+            }}
             className="text-gray-300 leading-relaxed mb-6"
           >
             Nestled in the heart of the city, Thampuran brings the soul of
@@ -73,11 +124,12 @@ export default function About() {
             experience.
           </motion.p>
 
+          {/* Paragraph 2 */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 }
+            }}
             className="text-gray-300 mb-12"
           >
             Every dish tells a story — from our slow-cooked biryanis to the
@@ -95,10 +147,11 @@ export default function About() {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + index * 0.2, duration: 0.8 }}
-                viewport={{ once: true }}
+                variants={{
+                  hidden: { opacity: 0, y: 40, scale: 0.9 },
+                  visible: { opacity: 1, y: 0, scale: 1 }
+                }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <h3 className="text-4xl font-bold text-amber-400">
                   {item.number}
@@ -109,7 +162,9 @@ export default function About() {
               </motion.div>
             ))}
           </div>
+
         </motion.div>
+
       </div>
     </section>
   );

@@ -26,7 +26,7 @@ function Menu({ closeMenu }) {
   }, [activeCategory]);
 
   return (
-    <div className="fixed inset-0 bg-black/75 backdrop-blur-2xl z-50 flex justify-center items-center">
+    <div id="menu" className="fixed inset-0 bg-black/75 backdrop-blur-2xl z-50 flex justify-center items-center">
       
       <div className="bg-[#2b0d12] w-[90%] max-w-5xl h-[85vh] rounded-2xl p-8 overflow-y-auto relative">
 
