@@ -8,6 +8,7 @@ export default function AssistantButton() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]); // store chat history
   const ref = useRef(null);
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   // Close when clicking outside
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function AssistantButton() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/assistant", {
+      const res = await fetch(`${BASE_URL}/api/assistant`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),

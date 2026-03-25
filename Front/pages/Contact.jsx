@@ -64,8 +64,8 @@ export default function Contact() {
         <div className="flex gap-3">
           <MapPin className="text-amber-400 mt-1" size={16} />
           <p className="text-gray-300">
-            123 Spice Lane, Food Street <br/>
-            City, State 680001
+            Chingavanam <br/>
+            kottayam, Kerala, India
           </p>
         </div>
 
